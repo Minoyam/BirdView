@@ -24,5 +24,5 @@ object NetworkHelper {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    
+    val productsApi = retrofit.create(ProductsApi::class.java)
 }
