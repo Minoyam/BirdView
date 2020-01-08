@@ -4,6 +4,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 
 interface ProductsApi {
-    @GET("/products")
+    @GET("products")
     fun getAllProducts():Observable<ProductsResponse>
 }
