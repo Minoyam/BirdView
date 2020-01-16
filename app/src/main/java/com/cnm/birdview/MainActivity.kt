@@ -1,6 +1,7 @@
 package com.cnm.birdview
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -15,11 +16,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ProductsAdapter.ItemOnClickListener {
 
-    private val productsAdapter = ProductsAdapter()
+    private val productsAdapter = ProductsAdapter(this@MainActivity)
     private val disposable = CompositeDisposable()
-
+    override fun itemOnClick(productsItem: ProductsResponse.Body) {
+        val intent = Intent(this, ProductsDetail::class.java)
+        intent.putExtra("product", productsItem.id)
+        startActivity(intent)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
