@@ -1,5 +1,7 @@
-package com.cnm.birdview.network
+package com.cnm.birdview.data.network
 
+import com.cnm.birdview.data.model.ProductsDetailResponse
+import com.cnm.birdview.data.model.ProductsResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

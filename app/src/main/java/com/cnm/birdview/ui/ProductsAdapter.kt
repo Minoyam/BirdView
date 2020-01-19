@@ -1,4 +1,4 @@
-package com.cnm.birdview
+package com.cnm.birdview.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cnm.birdview.network.ProductsResponse
+import com.cnm.birdview.R
+import com.cnm.birdview.data.model.ProductsResponse
 import kotlinx.android.synthetic.main.item_main.view.*
 
 class ProductsAdapter(private val itemOnClickListener: ItemOnClickListener) :

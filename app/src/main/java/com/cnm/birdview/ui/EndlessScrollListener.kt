@@ -1,4 +1,4 @@
-package com.cnm.birdview
+package com.cnm.birdview.ui
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

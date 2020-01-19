@@ -1,4 +1,4 @@
-package com.cnm.birdview
+package com.cnm.birdview.ui
 
 import android.content.Context
 import android.content.Intent
@@ -11,8 +11,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cnm.birdview.network.NetworkHelper
-import com.cnm.birdview.network.ProductsResponse
+import com.cnm.birdview.R
+import com.cnm.birdview.data.remote.network.NetworkHelper
+import com.cnm.birdview.data.model.ProductsResponse
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -104,9 +105,10 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
     }
 
     private fun scrollListener(gridlayoutManager: GridLayoutManager) {
-        scrollListener = EndlessScrollListener(gridlayoutManager) { skinType, page ->
-            showProducts(NetworkHelper.productsApi.getNextPageProducts(skinType, page), false)
-        }
+        scrollListener =
+            EndlessScrollListener(gridlayoutManager) { skinType, page ->
+                showProducts(NetworkHelper.productsApi.getNextPageProducts(skinType, page), false)
+            }
     }
 
     private fun showProducts(sc: Observable<ProductsResponse>, clearBoolean: Boolean = true) {

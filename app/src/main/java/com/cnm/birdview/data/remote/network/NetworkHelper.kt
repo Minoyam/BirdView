@@ -1,4 +1,4 @@
-package com.cnm.birdview.network
+package com.cnm.birdview.data.network
 
 import com.cnm.birdview.BuildConfig
 import okhttp3.OkHttpClient

@@ -1,9 +1,11 @@
-package com.cnm.birdview
+package com.cnm.birdview.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.cnm.birdview.network.NetworkHelper
+import com.cnm.birdview.R
+import com.cnm.birdview.data.remote.network.NetworkHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_products_detail.*
@@ -11,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_products_detail.*
 class ProductsDetail : AppCompatActivity() {
     private val disposable = CompositeDisposable()
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_detail)

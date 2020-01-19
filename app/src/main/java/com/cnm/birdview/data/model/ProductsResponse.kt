@@ -1,4 +1,4 @@
-package com.cnm.birdview.network
+package com.cnm.birdview.data.model
 
 
 import com.google.gson.annotations.SerializedName
