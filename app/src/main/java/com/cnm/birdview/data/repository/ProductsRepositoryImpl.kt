@@ -1,29 +1,30 @@
-package com.cnm.birdview.data.remote
+package com.cnm.birdview.data.repository
 
 import com.cnm.birdview.data.model.ProductsDetailResponse
 import com.cnm.birdview.data.model.ProductsResponse
-import com.cnm.birdview.data.remote.network.NetworkHelper
+import com.cnm.birdview.data.remote.ProductsRemoteDataSource
 import io.reactivex.Observable
 
-class ProductsRemoteDataSourceImp : ProductsRemoteDataSource {
+class ProductsRepositoryImpl(private val remoteDataSource: ProductsRemoteDataSource) :
+    ProductsRepository {
     override fun getAllProducts(): Observable<ProductsResponse> {
-        return NetworkHelper.productsApi.getAllProducts()
+        return remoteDataSource.getAllProducts()
     }
 
     override fun getNextPageProducts(skin_type: String, page: Int): Observable<ProductsResponse> {
-        return NetworkHelper.productsApi.getNextPageProducts(skin_type, page)
+        return remoteDataSource.getNextPageProducts(skin_type, page)
     }
 
     override fun getSearchProducts(search: String): Observable<ProductsResponse> {
-        return NetworkHelper.productsApi.getSearchProducts(search)
+        return remoteDataSource.getSearchProducts(search)
     }
 
     override fun getIdProducts(id: Int): Observable<ProductsDetailResponse> {
-        return NetworkHelper.productsApi.getIdProducts(id)
+        return remoteDataSource.getIdProducts(id)
     }
 
     override fun getSortProducts(skin_type: String): Observable<ProductsResponse> {
-        return NetworkHelper.productsApi.getSortProducts(skin_type)
+        return remoteDataSource.getSortProducts(skin_type)
     }
 
 }

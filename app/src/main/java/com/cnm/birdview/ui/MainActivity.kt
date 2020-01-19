@@ -12,8 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cnm.birdview.R
-import com.cnm.birdview.data.remote.network.NetworkHelper
 import com.cnm.birdview.data.model.ProductsResponse
+import com.cnm.birdview.data.remote.ProductsRemoteDataSourceImpl
+import com.cnm.birdview.data.repository.ProductsRepositoryImpl
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,7 +26,9 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
     private val productsAdapter = ProductsAdapter(this@MainActivity)
     private val disposable = CompositeDisposable()
     private lateinit var scrollListener: EndlessScrollListener
-
+    private val productsRepository: ProductsRepositoryImpl by lazy {
+        ProductsRepositoryImpl(ProductsRemoteDataSourceImpl())
+    }
 
     override fun itemOnClick(productsItem: ProductsResponse.Body) {
         val intent = Intent(this, ProductsDetail::class.java)
@@ -85,7 +88,7 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     if (et_search.text.toString().isNotEmpty()) {
                         showProducts(
-                            NetworkHelper.productsApi.getSearchProducts(et_search.text.toString())
+                            productsRepository.getSearchProducts(et_search.text.toString())
                         )
                         scrollListener.clear()
                     } else {
@@ -96,24 +99,24 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
             }
             true
         }
-        showProducts(NetworkHelper.productsApi.getAllProducts())
+        showProducts(productsRepository.getAllProducts())
     }
 
     private fun spinnerApiCall(type: String) {
         scrollListener.clear(type)
-        showProducts(NetworkHelper.productsApi.getSortProducts(type))
+        showProducts(productsRepository.getSortProducts(type))
     }
 
     private fun scrollListener(gridlayoutManager: GridLayoutManager) {
         scrollListener =
             EndlessScrollListener(gridlayoutManager) { skinType, page ->
-                showProducts(NetworkHelper.productsApi.getNextPageProducts(skinType, page), false)
+                showProducts(productsRepository.getNextPageProducts(skinType, page), false)
             }
     }
 
-    private fun showProducts(sc: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
+    private fun showProducts(apiCall: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
         disposable.add(
-            sc
+            apiCall
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     scrollListener.loading = false
