@@ -1,7 +1,6 @@
 package com.cnm.birdview
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +14,15 @@ class ProductsAdapter(private val itemOnClickListener: ItemOnClickListener) :
 
     private val productsItems = mutableListOf<ProductsResponse.Body>()
 
-    fun setItem(items: List<ProductsResponse.Body>) {
-        productsItems.clear()
+    fun setItem(items: List<ProductsResponse.Body>, clearBoolean: Boolean) {
+        if (clearBoolean) {
+            productsItems.clear()
+        }
+
         productsItems.addAll(items)
         notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false)

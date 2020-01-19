@@ -9,6 +9,9 @@ interface ProductsApi {
     @GET("products")
     fun getAllProducts(): Observable<ProductsResponse>
 
+    @GET("products?page")
+    fun getNextPageProducts(@Query("page") page: Int): Observable<ProductsResponse>
+
     @GET("products?search")
     fun getSearchProducts(@Query("search") search: String): Observable<ProductsResponse>
 

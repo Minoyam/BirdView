@@ -18,10 +18,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
 
     private val productsAdapter = ProductsAdapter(this@MainActivity)
     private val disposable = CompositeDisposable()
+    private lateinit var scrollListener: EndlessScrollListener
+
 
     override fun itemOnClick(productsItem: ProductsResponse.Body) {
         val intent = Intent(this, ProductsDetail::class.java)
@@ -35,12 +38,21 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
         val spinnerItems = resources.getStringArray(R.array.sort_array)
         val spinnerAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
+        val gridlayoutManager = GridLayoutManager(this@MainActivity, 2)
 
         sp_sort.adapter = spinnerAdapter
+
+        scrollListener = EndlessScrollListener(gridlayoutManager) { page ->
+            productsShow(NetworkHelper.productsApi.getNextPageProducts(page), false)
+        }
+
         rv_content.apply {
             adapter = productsAdapter
-            layoutManager = GridLayoutManager(this@MainActivity, 2)
+            layoutManager = gridlayoutManager
+            addOnScrollListener(scrollListener)
         }
+
+        rv_content.scrollToPosition(0)
 
         sp_sort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -53,14 +65,14 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
                 //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
                 when (position) {
                     0 -> {
-
+                        scrollListener.clear()
                     }
                     1 -> {
-
+                        scrollListener.clear()
                     }
                     //...
                     else -> {
-
+                        scrollListener.clear()
                     }
                 }
             }
@@ -74,7 +86,10 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
             when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     if (et_search.text.toString().isNotEmpty()) {
-                        productsShow(NetworkHelper.productsApi.getSearchProducts(et_search.text.toString()))
+                        productsShow(
+                            NetworkHelper.productsApi.getSearchProducts(et_search.text.toString())
+                        )
+                        scrollListener.clear()
                     } else {
                         Toast.makeText(this, "검색 내용이 없습니다.", Toast.LENGTH_SHORT).show()
                     }
@@ -84,15 +99,15 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
             true
         }
         productsShow(NetworkHelper.productsApi.getAllProducts())
-
     }
 
-    private fun productsShow(sc: Observable<ProductsResponse>) {
+    private fun productsShow(sc: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
         disposable.add(
             sc
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    productsAdapter.setItem(it.body)
+                    scrollListener.loading = false
+                    productsAdapter.setItem(it.body, clearBoolean)
                 }
         )
     }
