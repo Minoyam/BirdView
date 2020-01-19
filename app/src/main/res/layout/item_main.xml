@@ -13,7 +13,7 @@
         android:id="@+id/iv_thumbnail_image"
         android:layout_width="172dp"
         android:layout_height="172dp"
-        android:background="@drawable/rounded_image" />
+        android:background="@drawable/image_round" />
 
     <TextView
         android:id="@+id/tv_title"
