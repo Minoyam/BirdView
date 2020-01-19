@@ -1,4 +1,4 @@
-package com.cnm.birdview.data.network
+package com.cnm.birdview.data.remote.network
 
 import com.cnm.birdview.data.model.ProductsDetailResponse
 import com.cnm.birdview.data.model.ProductsResponse
