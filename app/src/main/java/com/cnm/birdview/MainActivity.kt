@@ -42,9 +42,7 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
 
         sp_sort.adapter = spinnerAdapter
 
-        scrollListener = EndlessScrollListener(gridlayoutManager) { page ->
-            productsShow(NetworkHelper.productsApi.getNextPageProducts(page), false)
-        }
+        scrollListener(gridlayoutManager)
 
         rv_content.apply {
             adapter = productsAdapter
@@ -64,15 +62,14 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
 
                 //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
                 when (position) {
-                    0 -> {
-                        scrollListener.clear()
+                    0, 1 -> {
+                        spinnerApiCall("oily")
                     }
-                    1 -> {
-                        scrollListener.clear()
+                    2 -> {
+                        spinnerApiCall("dry")
                     }
-                    //...
                     else -> {
-                        scrollListener.clear()
+                        spinnerApiCall("sensitive")
                     }
                 }
             }
@@ -86,7 +83,7 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
             when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     if (et_search.text.toString().isNotEmpty()) {
-                        productsShow(
+                        showProducts(
                             NetworkHelper.productsApi.getSearchProducts(et_search.text.toString())
                         )
                         scrollListener.clear()
@@ -98,10 +95,21 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.ItemOnClickListener {
             }
             true
         }
-        productsShow(NetworkHelper.productsApi.getAllProducts())
+        showProducts(NetworkHelper.productsApi.getAllProducts())
     }
 
-    private fun productsShow(sc: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
+    private fun spinnerApiCall(type: String) {
+        scrollListener.clear(type)
+        showProducts(NetworkHelper.productsApi.getSortProducts(type))
+    }
+
+    private fun scrollListener(gridlayoutManager: GridLayoutManager) {
+        scrollListener = EndlessScrollListener(gridlayoutManager) { skinType, page ->
+            showProducts(NetworkHelper.productsApi.getNextPageProducts(skinType, page), false)
+        }
+    }
+
+    private fun showProducts(sc: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
         disposable.add(
             sc
                 .observeOn(AndroidSchedulers.mainThread())

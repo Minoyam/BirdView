@@ -9,12 +9,17 @@ interface ProductsApi {
     @GET("products")
     fun getAllProducts(): Observable<ProductsResponse>
 
-    @GET("products?page")
-    fun getNextPageProducts(@Query("page") page: Int): Observable<ProductsResponse>
+    @GET("products?skin_type?page")
+    fun getNextPageProducts(
+        @Query("skin_type") skin_type: String, @Query("page") page: Int
+    ): Observable<ProductsResponse>
 
     @GET("products?search")
     fun getSearchProducts(@Query("search") search: String): Observable<ProductsResponse>
 
     @GET("products/{id}")
     fun getIdProducts(@Path("id") id: Int): Observable<ProductsDetailResponse>
+
+    @GET("products?skin_type")
+    fun getSortProducts(@Query("skin_type") skin_type: String): Observable<ProductsResponse>
 }
