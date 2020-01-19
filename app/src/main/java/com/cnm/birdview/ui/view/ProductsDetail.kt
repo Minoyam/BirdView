@@ -1,4 +1,4 @@
-package com.cnm.birdview.ui
+package com.cnm.birdview.ui.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
