@@ -1,8 +1,8 @@
 package com.cnm.birdview.ui.view
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(),
     ProductsAdapter.ItemOnClickListener, MainContract.View {
 
-
+    private val detailFragment = ProductsDetailFragment()
     private val productsAdapter = ProductsAdapter(this@MainActivity)
     private val presenter: MainContract.Presenter by lazy {
         MainPresenter(this@MainActivity)
@@ -29,9 +29,11 @@ class MainActivity : AppCompatActivity(),
     private lateinit var scrollListener: EndlessScrollListener
 
     override fun itemOnClick(productsItem: ProductsResponse.Body) {
-        val intent = Intent(this, ProductsDetail::class.java)
-        intent.putExtra("product", productsItem.id)
-        startActivity(intent)
+        val bundle: Bundle = Bundle().apply {
+            this.putSerializable("product", productsItem.id)
+        }
+        detailFragment.arguments = bundle
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +66,16 @@ class MainActivity : AppCompatActivity(),
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+        et_search.setOnClickListener {
+            // showEmptyLayout()
+            TODO("백버튼/ 다른곳 클릭했을때 키보드가 내려가면서 화면이 다시 보여야함")
+        }
 
         et_search.setOnEditorActionListener { _, i, _ ->
             when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     scrollListener.clear()
                     presenter.getSearchProducts(et_search.text.toString())
-
                     et_search.hideKeyboard()
                 }
             }
@@ -78,6 +83,7 @@ class MainActivity : AppCompatActivity(),
         }
         presenter.getAllProducts()
     }
+
 
     override fun showErrorEmptyQuery() =
         Toast.makeText(this, "검색 내용이 없습니다.", Toast.LENGTH_SHORT).show()
@@ -92,6 +98,17 @@ class MainActivity : AppCompatActivity(),
         scrollListener.loading = false
         productsAdapter.setItem(items, clearBoolean)
     }
+/*
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (et_search.isFocusable) {
+            Log.e("d", "forus")
+            et_search.isCursorVisible = false
+            showMainLayout()
+        }
+    }
+
+ */
 
 
     private fun spinnerSelected(position: Int) {
@@ -116,10 +133,23 @@ class MainActivity : AppCompatActivity(),
             }
     }
 
+    private fun showEmptyLayout() {
+        fl_empty.visibility = View.VISIBLE
+        cl_full.visibility = View.GONE
+    }
+
+    private fun showMainLayout() {
+        fl_empty.visibility = View.GONE
+        cl_full.visibility = View.VISIBLE
+    }
+
     private fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
+        showMainLayout()
+
     }
+
 
     companion object {
         const val OILY = "oily"
