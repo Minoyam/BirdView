@@ -2,11 +2,9 @@ package com.cnm.birdview.ui.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.cnm.birdview.R
 import com.cnm.birdview.data.model.ProductsDetailResponse
@@ -15,7 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_products_detail.*
 
-class ProductsDetailFragment : Fragment() {
+class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
     private val disposable = CompositeDisposable()
 
     override fun onCreateView(
@@ -23,16 +21,13 @@ class ProductsDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_products_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val product: Int
-        Bundle().apply {
-           product = this.getSerializable("product") as Int
-        }
+
+        val product: Int = this.arguments!!.getInt("product")
 
         disposable.add(NetworkHelper.productsApi.getIdProducts(product)
             .observeOn(AndroidSchedulers.mainThread())

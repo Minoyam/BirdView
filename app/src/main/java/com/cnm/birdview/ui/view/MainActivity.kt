@@ -2,7 +2,6 @@ package com.cnm.birdview.ui.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -30,9 +29,12 @@ class MainActivity : AppCompatActivity(),
 
     override fun itemOnClick(productsItem: ProductsResponse.Body) {
         val bundle: Bundle = Bundle().apply {
-            this.putSerializable("product", productsItem.id)
+            this.putInt("product", productsItem.id)
         }
-        detailFragment.arguments = bundle
+        detailFragment.apply {
+            this.arguments = bundle
+            this.show(supportFragmentManager, detailFragment.tag)
+        }
 
     }
 
