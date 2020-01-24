@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(),
             this.putInt("product", productsItem.id)
         }
         detailFragment.apply {
+            if(!this.isAdded)
             this.arguments = bundle
             this.show(supportFragmentManager, detailFragment.tag)
         }
@@ -84,6 +85,11 @@ class MainActivity : AppCompatActivity(),
             true
         }
         presenter.getAllProducts()
+    }
+
+    override fun onDestroy() {
+        presenter.disposableClear()
+        super.onDestroy()
     }
 
 

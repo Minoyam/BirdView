@@ -9,6 +9,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
+
+
     private val disposable = CompositeDisposable()
     private val productsRepository: ProductsRepositoryImpl by lazy {
         ProductsRepositoryImpl(ProductsRemoteDataSourceImpl())
@@ -34,6 +36,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun getSortProducts(skin_type: String) {
         view.scrollClear(skin_type)
         callApi(productsRepository.getSortProducts(skin_type))
+    }
+
+    override fun disposableClear() {
+        disposable.clear()
     }
 
     private fun callApi(api: Observable<ProductsResponse>, clearBoolean: Boolean = true) {

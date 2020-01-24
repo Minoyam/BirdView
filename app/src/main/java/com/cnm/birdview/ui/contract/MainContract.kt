@@ -22,5 +22,7 @@ interface MainContract {
         fun getSearchProducts(search: String)
 
         fun getSortProducts(skin_type: String)
+
+        fun disposableClear()
     }
 }
