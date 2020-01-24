@@ -23,7 +23,6 @@ open class EndlessScrollListener(
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        //check for scroll down
 
         if (dy < 0)
             return

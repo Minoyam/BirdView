@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
 import com.cnm.birdview.R
 import com.cnm.birdview.data.model.ProductsDetailResponse
@@ -12,10 +13,18 @@ import com.cnm.birdview.data.remote.network.NetworkHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_products_detail.*
+import android.content.Context
+
 
 class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
     private val disposable = CompositeDisposable()
+    private lateinit var mContext : Context
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,15 +35,15 @@ class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        val anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_button_move)
         val product: Int = this.arguments!!.getInt("product")
-
         disposable.add(NetworkHelper.productsApi.getIdProducts(product)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 setView(it)
             }
         )
+        bt_buy.startAnimation(anim)
     }
 
     override fun onDestroy() {
