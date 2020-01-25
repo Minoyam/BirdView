@@ -1,6 +1,7 @@
 package com.cnm.birdview.ui.presenter
 
-import com.cnm.birdview.data.remote.network.NetworkHelper
+import com.cnm.birdview.data.remote.ProductsRemoteDataSourceImpl
+import com.cnm.birdview.data.repository.ProductsRepositoryImpl
 import com.cnm.birdview.ui.contract.ProductsDetailContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -11,16 +12,20 @@ class ProductsDetailPresenter(private val view: ProductsDetailContract.View) :
 
 
     private val disposable = CompositeDisposable()
+    private val productsRepository: ProductsRepositoryImpl by lazy {
+        ProductsRepositoryImpl(ProductsRemoteDataSourceImpl())
+    }
 
     override fun detailApiCall(product: Int) {
         disposable.add(
-            NetworkHelper.productsApi.getIdProducts(product)
+            productsRepository.getIdProducts(product)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     view.setView(it.body)
                 }
         )
     }
+
     override fun disposableClear() {
         disposable.clear()
     }
