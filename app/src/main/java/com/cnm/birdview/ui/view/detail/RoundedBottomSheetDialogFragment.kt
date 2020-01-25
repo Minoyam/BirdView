@@ -1,4 +1,4 @@
-package com.cnm.birdview.ui.view
+package com.cnm.birdview.ui.view.detail
 
 import android.app.Dialog
 import android.os.Bundle

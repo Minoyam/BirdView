@@ -7,7 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".ui.view.MainActivity">
+    tools:context=".ui.view.main.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_main"

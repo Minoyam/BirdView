@@ -1,4 +1,4 @@
-package com.cnm.birdview.ui.view
+package com.cnm.birdview.ui.view.main
 
 import android.content.Context
 import android.os.Bundle
@@ -14,6 +14,7 @@ import com.cnm.birdview.R
 import com.cnm.birdview.data.model.ProductsResponse
 import com.cnm.birdview.ui.contract.MainContract
 import com.cnm.birdview.ui.presenter.MainPresenter
+import com.cnm.birdview.ui.view.detail.ProductsDetailFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 

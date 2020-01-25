@@ -1,4 +1,4 @@
-package com.cnm.birdview.ui.view
+package com.cnm.birdview.ui.view.main
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
