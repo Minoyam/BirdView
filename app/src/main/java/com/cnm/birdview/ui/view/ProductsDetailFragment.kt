@@ -41,7 +41,7 @@ class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
         disposable.add(NetworkHelper.productsApi.getIdProducts(product)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                setView(it)
+                setView(it.body)
             }
         )
         tv_close.setOnClickListener {
@@ -58,14 +58,14 @@ class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
 
 
     @SuppressLint("SetTextI18n")
-    private fun setView(item: ProductsDetailResponse) {
+    private fun setView(item: ProductsDetailResponse.Body) {
         with(item) {
             Glide.with(this@ProductsDetailFragment)
-                .load(body.fullSizeImage)
+                .load(fullSizeImage)
                 .into(iv_detail_image)
-            tv_detail_title.text = body.title
-            tv_detail_price.text = "${makeCommaNumber(body.price.toInt())}원"
-            tv_detail_description.text = body.description.replace("\\n", "\n")
+            tv_detail_title.text = title
+            tv_detail_price.text = "${makeCommaNumber(price.toInt())}원"
+            tv_detail_description.text = description.replace("\\n", "\n")
         }
     }
 
