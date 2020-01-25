@@ -45,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dp"
+                    android:textColor="@color/colorBlack"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     tools:text="플라멜엠디x 2개" />
@@ -55,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
-                    android:textColor="@color/colorBar"
+                    android:textColor="@color/colorPurple"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     tools:text="19650원" />
@@ -71,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dp"
+                    android:textColor="@color/colorBlack"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     tools:text="플라멜엠디 밀크러스트필 마일드워시오프 앰플 5mlx 2개" />

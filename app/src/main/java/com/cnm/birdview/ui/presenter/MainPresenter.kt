@@ -7,9 +7,9 @@ import com.cnm.birdview.ui.contract.MainContract
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import java.text.DecimalFormat
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
-
 
     private val disposable = CompositeDisposable()
     private val productsRepository: ProductsRepositoryImpl by lazy {

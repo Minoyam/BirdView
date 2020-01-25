@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.cnm.birdview.R
 import com.cnm.birdview.data.model.ProductsResponse
 import kotlinx.android.synthetic.main.item_main.view.*
+import java.text.DecimalFormat
 
 class ProductsAdapter(private val itemOnClickListener: ItemOnClickListener) :
     RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
@@ -58,9 +59,13 @@ class ProductsAdapter(private val itemOnClickListener: ItemOnClickListener) :
                     .override(165, 165)
                     .into(iv_thumbnail_image)
                 tv_title.text = item.title
-                tv_price.text = "${item.price}원"
+                tv_price.text = "${makeCommaNumber(item.price.toInt())}원"
             }
         }
     }
 
+    fun makeCommaNumber(input: Int): String {
+        val formatter = DecimalFormat("###,###")
+        return formatter.format(input)
+    }
 }
