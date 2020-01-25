@@ -45,6 +45,12 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private fun callApi(api: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
         disposable.add(api
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                view.showProgress()
+            }
+            .doAfterTerminate {
+                view.hideProgress()
+            }
             .subscribe {
                 val list = it.body
                 if (list.isEmpty()) {

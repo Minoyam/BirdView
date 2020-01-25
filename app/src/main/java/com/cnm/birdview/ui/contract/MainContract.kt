@@ -12,6 +12,10 @@ interface MainContract {
         fun showErrorEmptyResult()
 
         fun scrollClear(type: String = "oily")
+
+        fun showProgress()
+
+        fun hideProgress()
     }
 
     interface Presenter {

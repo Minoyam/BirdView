@@ -16,7 +16,7 @@ open class EndlessScrollListener(
     var loading = false
 
     fun clear(type : String = "oily") {
-        page = 0
+        page = 1
         skinType = type
         loading = false
     }

@@ -108,6 +108,14 @@ class MainActivity : AppCompatActivity(),
         scrollListener.loading = false
         productsAdapter.setItem(items, clearBoolean)
     }
+
+    override fun showProgress() {
+        pb_loading.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        pb_loading.visibility = View.GONE
+    }
 /*
     override fun onBackPressed() {
         super.onBackPressed()
@@ -135,28 +143,28 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-
     private fun setScroll(gridlayoutManager: GridLayoutManager) {
         scrollListener =
             EndlessScrollListener(gridlayoutManager) { skinType, page ->
                 presenter.getNextPageProducts(skinType, page)
             }
     }
+//
+//    private fun showEmptyLayout() {
+//        fl_empty.visibility = View.VISIBLE
+//        cl_full.visibility = View.GONE
+//    }
 
-    private fun showEmptyLayout() {
-        fl_empty.visibility = View.VISIBLE
-        cl_full.visibility = View.GONE
-    }
+//    private fun showMainLayout() {
+//        fl_empty.visibility = View.GONE
+//        cl_full.visibility = View.VISIBLE
+//    }
 
-    private fun showMainLayout() {
-        fl_empty.visibility = View.GONE
-        cl_full.visibility = View.VISIBLE
-    }
 
     private fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
-        showMainLayout()
+//        showMainLayout()
 
     }
 
