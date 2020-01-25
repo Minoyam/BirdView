@@ -31,11 +31,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/fl_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/cl_full"
@@ -70,7 +65,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
-            android:id="@+id/ns_view"
+            android:id="@+id/fl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
