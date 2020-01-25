@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(),
     private val presenter: MainContract.Presenter by lazy {
         MainPresenter(this@MainActivity)
     }
+
     private lateinit var scrollListener: EndlessScrollListener
 
     override fun itemOnClick(productsItem: ProductsResponse.Body) {
@@ -32,10 +33,11 @@ class MainActivity : AppCompatActivity(),
             this.putInt("product", productsItem.id)
         }
         detailFragment.apply {
-            if(!this.isAdded)
+            if (!this.isAdded)
             this.arguments = bundle
-            this.show(supportFragmentManager, detailFragment.tag)
+                this.show(supportFragmentManager, detailFragment.tag)
         }
+
 
     }
 

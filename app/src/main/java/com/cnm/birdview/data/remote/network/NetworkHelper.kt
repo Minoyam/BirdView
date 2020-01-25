@@ -6,10 +6,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object NetworkHelper {
 
     private val okHttpClient = OkHttpClient.Builder()
+        .connectTimeout(2, TimeUnit.MINUTES)
+        .writeTimeout(2, TimeUnit.MINUTES)
+        .readTimeout(2, TimeUnit.MINUTES)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
@@ -33,5 +37,5 @@ object NetworkHelper {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val productsApi = retrofit.create(ProductsApi::class.java)
+    val productsApi: ProductsApi = retrofit.create(ProductsApi::class.java)
 }

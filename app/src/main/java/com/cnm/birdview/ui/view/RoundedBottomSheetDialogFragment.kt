@@ -18,12 +18,8 @@ open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
         Handler().postDelayed({
             dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         }, 200)
-
-
-
         return dialog
 
     }
-
 
 }

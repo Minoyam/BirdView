@@ -8,7 +8,7 @@ open class EndlessScrollListener(
     private val lastItemListener: (String,Int) -> Unit
 ) : RecyclerView.OnScrollListener() {
 
-    private var page = 0
+    private var page = 1
     private var visibleItemCount: Int = 0
     private var totalItemCount: Int = 0
     private var pastVisibleItems: Int = 0

@@ -44,6 +44,10 @@ class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
                 setView(it)
             }
         )
+        tv_close.setOnClickListener {
+            onDestroy()
+            dismiss()
+        }
         bt_buy.startAnimation(anim)
     }
 
@@ -51,6 +55,7 @@ class ProductsDetailFragment : RoundedBottomSheetDialogFragment() {
         disposable.clear()
         super.onDestroy()
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun setView(item: ProductsDetailResponse) {
