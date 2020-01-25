@@ -22,38 +22,50 @@
                 android:id="@+id/iv_detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="375dp"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                tools:src="@mipmap/ic_launcher" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="24dp">
+                android:layout_margin="24dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_detail_title"
                     android:layout_width="match_parent"
-                    android:layout_height="144dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:maxLines="3"
+                    android:layout_marginTop="24dp"
                     android:textSize="32sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="플라멜엠디x 2개" />
 
                 <TextView
                     android:id="@+id/tv_detail_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
                     android:textColor="@color/colorBar"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="19650원" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ECECF5" />
 
                 <TextView
                     android:id="@+id/tv_detail_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="24dp"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="플라멜엠디 밀크러스트필 마일드워시오프 앰플 5mlx 2개" />
             </LinearLayout>
 
         </LinearLayout>
