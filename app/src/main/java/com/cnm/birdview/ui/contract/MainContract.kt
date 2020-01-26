@@ -19,7 +19,6 @@ interface MainContract {
     }
 
     interface Presenter {
-        fun getAllProducts()
 
         fun getNextPageProducts(skin_type: String, page: Int)
 

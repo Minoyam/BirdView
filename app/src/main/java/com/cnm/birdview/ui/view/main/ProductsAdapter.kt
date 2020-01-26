@@ -56,7 +56,7 @@ class ProductsAdapter(private val itemOnClickListener: ItemOnClickListener) :
             with(itemView) {
                 Glide.with(this)
                     .load(item.thumbnailImage)
-                    .override(165, 165)
+                    .override(160, 160)
                     .into(iv_thumbnail_image)
                 tv_title.text = item.title
                 tv_price.text = "${makeCommaNumber(item.price.toInt())}원"

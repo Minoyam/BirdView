@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(),
     ProductsAdapter.ItemOnClickListener, MainContract.View {
 
+
     private val detailFragment = ProductsDetailFragment()
     private val productsAdapter = ProductsAdapter(this@MainActivity)
     private val presenter: MainContract.Presenter by lazy {
@@ -35,8 +36,8 @@ class MainActivity : AppCompatActivity(),
         }
         detailFragment.apply {
             if (!this.isAdded)
-            this.arguments = bundle
-                this.show(supportFragmentManager, detailFragment.tag)
+                this.arguments = bundle
+            this.show(supportFragmentManager, detailFragment.tag)
         }
 
 
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(),
         val spinnerItems = resources.getStringArray(R.array.sort_array)
         val spinnerAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
+
         val gridlayoutManager = GridLayoutManager(this@MainActivity, 2)
 
         sp_sort.adapter = spinnerAdapter
@@ -83,7 +85,6 @@ class MainActivity : AppCompatActivity(),
             }
             true
         }
-        presenter.getAllProducts()
     }
 
     override fun onDestroy() {

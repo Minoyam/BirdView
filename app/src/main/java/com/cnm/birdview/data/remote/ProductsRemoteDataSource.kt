@@ -2,19 +2,17 @@ package com.cnm.birdview.data.remote
 
 import com.cnm.birdview.data.model.ProductsDetailResponse
 import com.cnm.birdview.data.model.ProductsResponse
-import io.reactivex.Observable
+import io.reactivex.Single
 
 interface ProductsRemoteDataSource {
 
-    fun getAllProducts(): Observable<ProductsResponse>
-
     fun getNextPageProducts(
         skin_type: String, page: Int
-    ): Observable<ProductsResponse>
+    ): Single<ProductsResponse>
 
-    fun getSearchProducts(search: String): Observable<ProductsResponse>
+    fun getSearchProducts(search: String): Single<ProductsResponse>
 
-    fun getIdProducts(id: Int): Observable<ProductsDetailResponse>
+    fun getIdProducts(id: Int): Single<ProductsDetailResponse>
 
-    fun getSortProducts(skin_type: String): Observable<ProductsResponse>
+    fun getSortProducts(skin_type: String): Single<ProductsResponse>
 }

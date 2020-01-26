@@ -56,7 +56,12 @@
                         android:id="@+id/sp_sort"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end" />
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+
+                        tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
                 </androidx.appcompat.widget.Toolbar>
 

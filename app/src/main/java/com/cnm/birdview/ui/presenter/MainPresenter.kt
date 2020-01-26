@@ -4,10 +4,9 @@ import com.cnm.birdview.data.model.ProductsResponse
 import com.cnm.birdview.data.remote.ProductsRemoteDataSourceImpl
 import com.cnm.birdview.data.repository.ProductsRepositoryImpl
 import com.cnm.birdview.ui.contract.MainContract
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import java.text.DecimalFormat
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
 
@@ -15,10 +14,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private val productsRepository: ProductsRepositoryImpl by lazy {
         ProductsRepositoryImpl(ProductsRemoteDataSourceImpl())
     }
-
-
-    override fun getAllProducts() =
-        callApi(productsRepository.getAllProducts())
 
     override fun getNextPageProducts(skin_type: String, page: Int) =
         callApi(productsRepository.getNextPageProducts(skin_type, page), false)
@@ -42,7 +37,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         disposable.clear()
     }
 
-    private fun callApi(api: Observable<ProductsResponse>, clearBoolean: Boolean = true) {
+    private fun callApi(api: Single<ProductsResponse>, clearBoolean: Boolean = true) {
         disposable.add(api
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -51,14 +46,12 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             .doAfterTerminate {
                 view.hideProgress()
             }
-            .subscribe {
-                val list = it.body
-                if (list.isEmpty()) {
-                    view.showErrorEmptyResult()
-                } else {
-                    view.setItem(list, clearBoolean)
-                }
-            }
+            .subscribe({
+                view.setItem(it.body, clearBoolean)
+            }, {
+                view.showErrorEmptyResult()
+            })
+
         )
     }
 

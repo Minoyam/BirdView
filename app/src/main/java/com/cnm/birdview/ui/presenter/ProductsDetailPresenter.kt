@@ -20,9 +20,11 @@ class ProductsDetailPresenter(private val view: ProductsDetailContract.View) :
         disposable.add(
             productsRepository.getIdProducts(product)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe({
                     view.setView(it.body)
-                }
+                }, {
+                    it.printStackTrace()
+                })
         )
     }
 
