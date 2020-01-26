@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 open class EndlessScrollListener(
     private val manager: GridLayoutManager,
-    private val lastItemListener: (String,Int) -> Unit
+    private val lastItemListener: (String, Int) -> Unit
+
 ) : RecyclerView.OnScrollListener() {
 
     private var page = 1
@@ -14,8 +15,9 @@ open class EndlessScrollListener(
     private var pastVisibleItems: Int = 0
     private var skinType = "oily"
     var loading = false
+    var searchBoolean = true
 
-    fun clear(type : String = "oily") {
+    fun clear(type: String = "oily") {
         page = 1
         skinType = type
         loading = false
@@ -31,10 +33,10 @@ open class EndlessScrollListener(
         totalItemCount = manager.itemCount
         pastVisibleItems = manager.findFirstVisibleItemPosition()
         if (!loading) {
-            if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+            if ((visibleItemCount + pastVisibleItems >= totalItemCount) && searchBoolean) {
                 loading = true
                 page++
-                lastItemListener(skinType,page)
+                lastItemListener(skinType, page)
             }
         }
     }

@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity(),
         val spinnerItems = resources.getStringArray(R.array.sort_array)
         val spinnerAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
-
         val gridlayoutManager = GridLayoutManager(this@MainActivity, 2)
 
         sp_sort.adapter = spinnerAdapter
@@ -81,6 +80,7 @@ class MainActivity : AppCompatActivity(),
                 EditorInfo.IME_ACTION_SEARCH -> {
                     presenter.getSearchProducts(et_search.text.toString())
                     et_search.hideKeyboard()
+                    scrollListener.searchBoolean = false
                 }
             }
             true
@@ -128,6 +128,8 @@ class MainActivity : AppCompatActivity(),
 
 
     private fun spinnerSelected(position: Int) {
+        scrollListener.searchBoolean = true
+        et_search.text = null
         when (position) {
             0, 1 -> {
                 presenter.getSortProducts(OILY)

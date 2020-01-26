@@ -1,11 +1,9 @@
 package com.cnm.birdview.ui.presenter
 
-import android.util.Log
 import com.cnm.birdview.data.model.ProductsResponse
 import com.cnm.birdview.data.remote.ProductsRemoteDataSourceImpl
 import com.cnm.birdview.data.repository.ProductsRepositoryImpl
 import com.cnm.birdview.ui.contract.MainContract
-import com.google.gson.JsonSyntaxException
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,7 +23,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         if (search.isEmpty()) {
             view.showErrorEmptyQuery()
         } else {
-            view.scrollClear()
             callApi(productsRepository.getSearchProducts(search))
         }
     }
@@ -51,7 +48,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             .subscribe({
                 view.setItem(it.body, clearBoolean)
             }, {
-                    view.showErrorEmptyResult()
+                view.showErrorEmptyResult()
             })
 
         )
