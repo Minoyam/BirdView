@@ -1,5 +1,6 @@
 package com.cnm.birdview.ui.view.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -15,7 +16,9 @@ import com.cnm.birdview.data.model.ProductsResponse
 import com.cnm.birdview.ui.contract.MainContract
 import com.cnm.birdview.ui.presenter.MainPresenter
 import com.cnm.birdview.ui.view.detail.ProductsDetailFragment
+import com.google.android.material.internal.ViewUtils.dpToPx
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity(),
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity(),
 
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -60,7 +64,18 @@ class MainActivity : AppCompatActivity(),
             layoutManager = gridlayoutManager
             addOnScrollListener(scrollListener)
         }
-
+        ll_main.viewTreeObserver.addOnGlobalLayoutListener {
+            val mRootViewHeight = ll_main.rootView.height
+            val mRelativeWrapperHeight = ll_main.height
+            val mDiff = mRootViewHeight - mRelativeWrapperHeight
+            if (mDiff > dpToPx(this, 200)) {
+                et_search.text = null
+                showEmptyLayout()
+            } else {
+                showFullLayout()
+                ll_main.requestFocus()
+            }
+        }
         sp_sort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -73,8 +88,6 @@ class MainActivity : AppCompatActivity(),
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-
-
         et_search.setOnEditorActionListener { _, i, _ ->
             when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
@@ -85,6 +98,11 @@ class MainActivity : AppCompatActivity(),
             }
             true
         }
+    }
+
+    private fun showEmptyLayout() {
+        cl_full.visibility = View.GONE
+        fl_empty.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {
@@ -114,17 +132,16 @@ class MainActivity : AppCompatActivity(),
     override fun hideProgress() {
         pb_loading.visibility = View.GONE
     }
-/*
+
     override fun onBackPressed() {
         super.onBackPressed()
-        if (et_search.isFocusable) {
-            Log.e("d", "forus")
-            et_search.isCursorVisible = false
-            showMainLayout()
-        }
+        et_search.hideKeyboard()
     }
 
- */
+    override fun showFullLayout() {
+        cl_full.visibility = View.VISIBLE
+        fl_empty.visibility = View.GONE
+    }
 
 
     private fun spinnerSelected(position: Int) {
@@ -150,13 +167,12 @@ class MainActivity : AppCompatActivity(),
             }
     }
 
-
     private fun View.hideKeyboard() {
+        et_search.requestFocus()
+        showFullLayout()
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
-
     }
-
 
     companion object {
         const val OILY = "oily"
