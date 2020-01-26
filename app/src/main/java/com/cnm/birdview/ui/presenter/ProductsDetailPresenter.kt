@@ -9,8 +9,6 @@ import java.text.DecimalFormat
 
 class ProductsDetailPresenter(private val view: ProductsDetailContract.View) :
     ProductsDetailContract.Presenter {
-
-
     private val disposable = CompositeDisposable()
     private val productsRepository: ProductsRepositoryImpl by lazy {
         ProductsRepositoryImpl(ProductsRemoteDataSourceImpl())
@@ -28,9 +26,7 @@ class ProductsDetailPresenter(private val view: ProductsDetailContract.View) :
         )
     }
 
-    override fun disposableClear() {
-        disposable.clear()
-    }
+    override fun disposableClear() = disposable.clear()
 
     override fun makeCommaNumber(input: Int): String {
         val formatter = DecimalFormat("###,###")

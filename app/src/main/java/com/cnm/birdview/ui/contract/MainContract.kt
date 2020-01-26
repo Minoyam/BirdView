@@ -17,7 +17,6 @@ interface MainContract {
 
         fun hideProgress()
 
-        fun showFullLayout()
     }
 
     interface Presenter {

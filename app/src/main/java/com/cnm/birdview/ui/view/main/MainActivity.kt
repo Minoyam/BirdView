@@ -42,8 +42,6 @@ class MainActivity : AppCompatActivity(),
                 this.arguments = bundle
             this.show(supportFragmentManager, detailFragment.tag)
         }
-
-
     }
 
     @SuppressLint("RestrictedApi")
@@ -63,18 +61,6 @@ class MainActivity : AppCompatActivity(),
             adapter = productsAdapter
             layoutManager = gridlayoutManager
             addOnScrollListener(scrollListener)
-        }
-        ll_main.viewTreeObserver.addOnGlobalLayoutListener {
-            val mRootViewHeight = ll_main.rootView.height
-            val mRelativeWrapperHeight = ll_main.height
-            val mDiff = mRootViewHeight - mRelativeWrapperHeight
-            if (mDiff > dpToPx(this, 200)) {
-                et_search.text = null
-                showEmptyLayout()
-            } else {
-                showFullLayout()
-                ll_main.requestFocus()
-            }
         }
         sp_sort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -98,11 +84,19 @@ class MainActivity : AppCompatActivity(),
             }
             true
         }
-    }
 
-    private fun showEmptyLayout() {
-        cl_full.visibility = View.GONE
-        fl_empty.visibility = View.VISIBLE
+        ll_main.viewTreeObserver.addOnGlobalLayoutListener {
+            val mRootViewHeight = ll_main.rootView.height
+            val mRelativeWrapperHeight = ll_main.height
+            val mDiff = mRootViewHeight - mRelativeWrapperHeight
+            if (mDiff > dpToPx(this, 200)) {
+                et_search.text = null
+                showEmptyLayout()
+            } else {
+                showFullLayout()
+                ll_main.requestFocus()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -133,16 +127,14 @@ class MainActivity : AppCompatActivity(),
         pb_loading.visibility = View.GONE
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        et_search.hideKeyboard()
-    }
-
-    override fun showFullLayout() {
+    private fun showFullLayout() {
         cl_full.visibility = View.VISIBLE
         fl_empty.visibility = View.GONE
     }
-
+    private fun showEmptyLayout() {
+        cl_full.visibility = View.GONE
+        fl_empty.visibility = View.VISIBLE
+    }
 
     private fun spinnerSelected(position: Int) {
         scrollListener.searchBoolean = true
@@ -168,8 +160,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun View.hideKeyboard() {
-        et_search.requestFocus()
-        showFullLayout()
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }

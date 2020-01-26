@@ -51,7 +51,6 @@ class ProductsDetailFragment : RoundedBottomSheetDialogFragment(), ProductsDetai
         super.onDestroy()
     }
 
-
     @SuppressLint("SetTextI18n")
     override fun setView(item: ProductsDetailResponse.Body) {
         with(item) {

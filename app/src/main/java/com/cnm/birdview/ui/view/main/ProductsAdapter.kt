@@ -25,19 +25,14 @@ class ProductsAdapter(private val itemOnClickListener: ItemOnClickListener) :
         notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false)
         return ProductsViewHolder(view, itemOnClickListener)
     }
 
-    override fun getItemCount(): Int {
-        return productsItems.size
-    }
+    override fun getItemCount(): Int = productsItems.size
 
-    override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
-        holder.bind(productsItems[position])
-    }
+    override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) = holder.bind(productsItems[position])
 
     interface ItemOnClickListener {
         fun itemOnClick(productsItem: ProductsResponse.Body)

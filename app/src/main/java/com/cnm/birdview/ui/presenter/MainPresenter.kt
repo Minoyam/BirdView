@@ -18,7 +18,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun getNextPageProducts(skin_type: String, page: Int) =
         callApi(productsRepository.getNextPageProducts(skin_type, page), false)
 
-
     override fun getSearchProducts(search: String) {
         if (search.isEmpty()) {
             view.showErrorEmptyQuery()
@@ -32,9 +31,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         callApi(productsRepository.getSortProducts(skin_type))
     }
 
-    override fun disposableClear() {
-        disposable.clear()
-    }
+    override fun disposableClear() = disposable.clear()
 
     private fun callApi(api: Single<ProductsResponse>, clearBoolean: Boolean = true) {
         disposable.add(api
