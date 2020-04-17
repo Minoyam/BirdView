@@ -18,7 +18,6 @@ import com.cnm.birdview.ui.presenter.MainPresenter
 import com.cnm.birdview.ui.view.detail.ProductsDetailFragment
 import com.google.android.material.internal.ViewUtils.dpToPx
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity(),
@@ -131,6 +130,7 @@ class MainActivity : AppCompatActivity(),
         cl_full.visibility = View.VISIBLE
         fl_empty.visibility = View.GONE
     }
+
     private fun showEmptyLayout() {
         cl_full.visibility = View.GONE
         fl_empty.visibility = View.VISIBLE
